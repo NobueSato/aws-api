@@ -1,4 +1,4 @@
-# BMO API Demo
+# API Demo
 
 A RESTful API built with Node.js and Express, deployed on AWS using Lambda, API Gateway, S3, and Cognito.
 
