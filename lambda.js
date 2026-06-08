@@ -1,6 +1,12 @@
+// API demo project - Lambda version
+
 const serverless = require('serverless-http');
 const express = require('express');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+
 const app = express();
+const s3 = new S3Client({ region: 'us-east-2' });
+const BUCKET = 'api-demo-nsato-clients';
 
 app.use(express.json());
 
@@ -21,11 +27,20 @@ app.get('/clients/:id', (req, res) => {
   res.json(client);
 });
 
-// POST new client
-app.post('/clients', (req, res) => {
+// POST new client - now saves to S3!
+app.post('/clients', async (req, res) => {
   const { name, department } = req.body;
   const newClient = { id: Date.now().toString(), name, department };
   clients.push(newClient);
+
+  // Save to S3
+  await s3.send(new PutObjectCommand({
+    Bucket: BUCKET,
+    Key: `clients/${newClient.id}.json`,
+    Body: JSON.stringify(newClient),
+    ContentType: 'application/json'
+  }));
+
   res.status(201).json(newClient);
 });
 
