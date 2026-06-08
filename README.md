@@ -8,6 +8,10 @@ Client (Postman) → API Gateway → Lambda (Node.js) → S3/DynamoDB
 Auth: Cognito User Pool + JWT authorizer
 IAM: Least-privilege execution role
 
+## Live API
+
+https://a1f7gobfl2.execute-api.us-east-2.amazonaws.com
+
 ## Endpoints
 
 | Method | Endpoint     | Description     |
